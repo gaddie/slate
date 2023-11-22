@@ -26,7 +26,7 @@ code_clipboard: true
 
 meta:
  - name: description
-   content: Documentation for the Kittn API
+   content: Documentation for the product catalog management API
 ---
 
 
@@ -85,7 +85,6 @@ import java.net.http.HttpHeaders;
 import java.net.http.HttpHeaders;
 import java.io.IOException;
 
-
 public class FetchCatalog {
 
 
@@ -103,7 +102,6 @@ public class FetchCatalog {
                    .uri(URI.create(url))
                    .build();
 
-
            // Send the request and retrieve the response
            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -115,7 +113,6 @@ public class FetchCatalog {
            } else {
                System.err.println("HTTP error! Status: " + response.statusCode());
            }
-
 
        } catch (IOException | InterruptedException e) {
            System.err.println("Error fetching catalog: " + e.getMessage());
@@ -132,21 +129,16 @@ public class FetchCatalog {
 ```python
 import requests
 
-
 url = 'http://localhost:8080/catalog'
-
 
 try:
    response = requests.get(url)
 
-
    # Check if the request was successful (status code 200)
    response.raise_for_status()
 
-
    # Handle the catalog data here
    print("Catalog:", response.json())
-
 
 except requests.HTTPError as http_err:
    print(f"HTTP error occurred: {http_err}")
@@ -165,10 +157,8 @@ except Exception as err:
 
 ```shell
 
-
 curl -X GET 'http://localhost:8080/catalog' \
  -H 'accept: application/json;charset=utf-8'
-
 
 ```
 
@@ -180,7 +170,6 @@ curl -X GET 'http://localhost:8080/catalog' \
 
 const axios = require('axios');
 
-
 axios.get('http://localhost:8080/catalog')
  .then(response => {
    // Handle the catalog data here
@@ -189,9 +178,6 @@ axios.get('http://localhost:8080/catalog')
  .catch(error => {
    console.error("Error fetching catalog:", error);
  });
-
-
-
 
 ```
 
@@ -337,21 +323,17 @@ public class FetchCatalog {
    public static void main(String[] args) {
        String url = "http://localhost:8080/catalog/12345";
 
-
        try {
            // Create an HttpClient
            HttpClient httpClient = HttpClient.newHttpClient();
-
 
            // Create an HttpRequest
            HttpRequest request = HttpRequest.newBuilder()
                    .uri(URI.create(url))
                    .build();
 
-
            // Send the request and retrieve the response
            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
 
            // Check if the request was successful (status code 200)
            if (response.statusCode() == 200) {
@@ -360,7 +342,6 @@ public class FetchCatalog {
            } else {
                System.err.println("HTTP error! Status: " + response.statusCode());
            }
-
 
        } catch (IOException | InterruptedException e) {
            System.err.println("Error fetching catalog: " + e.getMessage());
@@ -373,21 +354,16 @@ public class FetchCatalog {
 ```python
 import requests
 
-
 url = 'http://localhost:8080/catalog/12345'
-
 
 try:
    response = requests.get(url)
 
-
    # Check if the request was successful (status code 200)
    response.raise_for_status()
 
-
    # Handle the catalog data here
    print("Catalog:", response.json())
-
 
 except requests.HTTPError as http_err:
    print(f"HTTP error occurred: {http_err}")
@@ -510,10 +486,8 @@ import java.net.http.HttpResponse;
 
 public class PostCatalogExample {
 
-
    public static void main(String[] args) {
        String url = "http://localhost:8080/catalog";
-
 
        String requestBody = "{" +
            "\"name\": \"Catalog Wholesale Business\"," +
@@ -549,9 +523,7 @@ public class PostCatalogExample {
                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                    .build();
 
-
            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
 
            // Handle the response
            System.out.println("Response Code: " + response.statusCode());
@@ -570,9 +542,7 @@ public class PostCatalogExample {
 import requests
 import json
 
-
 url = 'http://localhost:8080/catalog'
-
 
 catalog_data = {
    "name": "Catalog Wholesale Business",
@@ -609,7 +579,6 @@ try:
   
    # Handle the response here
    print("Response:", response.json())
-
 
 except requests.HTTPError as http_err:
    print(f"HTTP error occurred: {http_err}")
@@ -655,11 +624,7 @@ curl -X POST 'http://localhost:8080/catalog' \
 ```javascript
 const fetch = require('node-fetch');
 
-
 const url = 'http://localhost:8080/catalog';
-
-
-
 
 const catalogData = {
    "name": "Catalog Wholesale Business",
@@ -912,11 +877,11 @@ fetch(url, {
 ```
 
 
-```
+
 > Example of a patch request:
 
 
-```
+
 ```json
 {
  "version": "2.0",
@@ -981,7 +946,7 @@ fetch(url, {
 ```
 
 
-This endpoint retrieves a specific catalog.
+This endpoint updates a specific catalog.
 
 
 
@@ -1004,40 +969,99 @@ ID | The ID of the catalog to retrieve
 
 
 
-## Delete a Specific Kitten
+## Delete a Specific catalog
 
 
 ```java
-require 'kittn'
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
+public class DeleteCatalogExample {
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
+    public static void main(String[] args) {
+        String url = "http://localhost:8080/catalog/12345";
+
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Content-Type", "application/json")
+                    .DELETE()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // Handle the response
+            System.out.println("Response Code: " + response.statusCode());
+            System.out.println("Response Body: " + response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
 ```
 
 
 ```python
-import kittn
+import requests
 
+url = 'http://localhost:8080/catalog/12345'
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
+try:
+    response = requests.delete(url, headers={'Content-Type': 'application/json'})
+    
+    # Check if the request was successful (status code 200)
+    response.raise_for_status()
+    
+    # Handle the response here
+    print("Response Code:", response.status_code)
+    print("Response Body:", response.text)
+
+except requests.HTTPError as http_err:
+    print(f"HTTP error occurred: {http_err}")
+except Exception as err:
+    print(f"Error making DELETE request: {err}")
+
 ```
 
 
 ```shell
-curl "http://example.com/api/kittens/2" \
- -X DELETE \
- -H "Authorization: meowmeowmeow"
+curl -X DELETE 'http://localhost:8080/catalog/12345' \
+ -H 'Content-Type: application/json' \
 ```
 
 
 ```javascript
-const kittn = require('kittn');
+const fetch = require('node-fetch');
 
+const url = 'http://localhost:8080/catalog/12345';
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+fetch(url, {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+  .then(response => {
+    // Check if the request was successful (status code 200)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    // DELETE requests may not have a response body, so no need to parse JSON
+    return response.text(); // or response.json() if you expect a JSON response
+  })
+  .then(data => {
+    // Handle the response data here
+    console.log("Response:", data);
+  })
+  .catch(error => {
+    console.error("Error making DELETE request:", error);
+  });
+
 ```
 
 
@@ -1045,20 +1069,19 @@ let max = api.kittens.delete(2);
 
 
 ```json
-{
- "id": 2,
- "deleted" : ":("
+{ 
+  "204" : "deleted"
 }
 ```
 
 
-This endpoint deletes a specific kitten.
+This endpoint deletes a specific catalog.
 
 
 ### HTTP Request
 
 
-`DELETE http://example.com/kittens/<ID>`
+`DELETE http://localhost:8080/catalog/<ID>`
 
 
 ### URL Parameters
@@ -1066,7 +1089,7 @@ This endpoint deletes a specific kitten.
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to delete
+ID | The ID of the catalog to delete
 
 
 
