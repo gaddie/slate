@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta
             name="description"
-            content="Documentation for the Kittn API"
+            content="Documentation for the product catalog management API"
         >
     <title>API Reference</title>
 
@@ -342,7 +342,7 @@
                     <a href="#patch-a-specific-catalog" class="toc-h2 toc-link" data-title="Patch a Specific Catalog">Patch a Specific Catalog</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#delete-a-specific-catalog" class="toc-h2 toc-link" data-title="Delete a Specific catalog">Delete a Specific catalog</a>
                   </li>
               </ul>
           </li>
@@ -388,7 +388,6 @@
 <span class="kn">import</span> <span class="nn">java.net.http.HttpHeaders</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
 
-
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">FetchCatalog</span> <span class="o">{</span>
 
 
@@ -406,7 +405,6 @@
                    <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="no">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">url</span><span class="o">))</span>
                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 
-
            <span class="c1">// Send the request and retrieve the response</span>
            <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
 
@@ -419,7 +417,6 @@
                <span class="nc">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"HTTP error! Status: "</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="na">statusCode</span><span class="o">());</span>
            <span class="o">}</span>
 
-
        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="o">|</span> <span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
            <span class="nc">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Error fetching catalog: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
        <span class="o">}</span>
@@ -429,21 +426,16 @@
 
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-
 <span class="n">url</span> <span class="o">=</span> <span class="s">'http://localhost:8080/catalog'</span>
-
 
 <span class="k">try</span><span class="p">:</span>
    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
-
    <span class="c1"># Check if the request was successful (status code 200)
 </span>   <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
 
-
    <span class="c1"># Handle the catalog data here
 </span>   <span class="k">print</span><span class="p">(</span><span class="s">"Catalog:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
-
 
 <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
@@ -452,15 +444,12 @@
 
 
 </code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>
-
 curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/catalog'</span> <span class="se">\</span>
  <span class="nt">-H</span> <span class="s1">'accept: application/json;charset=utf-8'</span>
-
 
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code>
 
 <span class="kd">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">axios</span><span class="dl">'</span><span class="p">);</span>
-
 
 <span class="nx">axios</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:8080/catalog</span><span class="dl">'</span><span class="p">)</span>
  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -470,9 +459,6 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Error fetching catalog:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
  <span class="p">});</span>
-
-
-
 
 </code></pre></div>
 <blockquote>
@@ -595,21 +581,17 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://localhost:8080/catalog/12345"</span><span class="o">;</span>
 
-
        <span class="k">try</span> <span class="o">{</span>
            <span class="c1">// Create an HttpClient</span>
            <span class="nc">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="nc">HttpClient</span><span class="o">.</span><span class="na">newHttpClient</span><span class="o">();</span>
-
 
            <span class="c1">// Create an HttpRequest</span>
            <span class="nc">HttpRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="nc">HttpRequest</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
                    <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="no">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">url</span><span class="o">))</span>
                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 
-
            <span class="c1">// Send the request and retrieve the response</span>
            <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
-
 
            <span class="c1">// Check if the request was successful (status code 200)</span>
            <span class="k">if</span> <span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">statusCode</span><span class="o">()</span> <span class="o">==</span> <span class="mi">200</span><span class="o">)</span> <span class="o">{</span>
@@ -619,7 +601,6 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
                <span class="nc">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"HTTP error! Status: "</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="na">statusCode</span><span class="o">());</span>
            <span class="o">}</span>
 
-
        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="o">|</span> <span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
            <span class="nc">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Error fetching catalog: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
        <span class="o">}</span>
@@ -627,21 +608,16 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
 <span class="o">}</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-
 <span class="n">url</span> <span class="o">=</span> <span class="s">'http://localhost:8080/catalog/12345'</span>
-
 
 <span class="k">try</span><span class="p">:</span>
    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
-
    <span class="c1"># Check if the request was successful (status code 200)
 </span>   <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
 
-
    <span class="c1"># Handle the catalog data here
 </span>   <span class="k">print</span><span class="p">(</span><span class="s">"Catalog:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
-
 
 <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
@@ -737,10 +713,8 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">PostCatalogExample</span> <span class="o">{</span>
 
-
    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://localhost:8080/catalog"</span><span class="o">;</span>
-
 
        <span class="nc">String</span> <span class="n">requestBody</span> <span class="o">=</span> <span class="s">"{"</span> <span class="o">+</span>
            <span class="s">"\"name\": \"Catalog Wholesale Business\","</span> <span class="o">+</span>
@@ -776,9 +750,7 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
                    <span class="o">.</span><span class="na">POST</span><span class="o">(</span><span class="nc">HttpRequest</span><span class="o">.</span><span class="na">BodyPublishers</span><span class="o">.</span><span class="na">ofString</span><span class="o">(</span><span class="n">requestBody</span><span class="o">))</span>
                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 
-
            <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
-
 
            <span class="c1">// Handle the response</span>
            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response Code: "</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="na">statusCode</span><span class="o">());</span>
@@ -793,9 +765,7 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
-
 <span class="n">url</span> <span class="o">=</span> <span class="s">'http://localhost:8080/catalog'</span>
-
 
 <span class="n">catalog_data</span> <span class="o">=</span> <span class="p">{</span>
    <span class="s">"name"</span><span class="p">:</span> <span class="s">"Catalog Wholesale Business"</span><span class="p">,</span>
@@ -833,7 +803,6 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
    <span class="c1"># Handle the response here
 </span>   <span class="k">print</span><span class="p">(</span><span class="s">"Response:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
 
-
 <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
@@ -870,11 +839,7 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
 
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">node-fetch</span><span class="dl">'</span><span class="p">);</span>
 
-
 <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">http://localhost:8080/catalog</span><span class="dl">'</span><span class="p">;</span>
-
-
-
 
 <span class="kd">const</span> <span class="nx">catalogData</span> <span class="o">=</span> <span class="p">{</span>
    <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Catalog Wholesale Business</span><span class="dl">"</span><span class="p">,</span>
@@ -1090,10 +1055,11 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Response:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">))</span>
    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Error posting catalog data:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">));</span>
 
-</code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>&gt; Example of a patch request:
-
-
-</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</code></pre></div>
+<blockquote>
+<p>Example of a patch request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
  </span><span class="nl">"validFor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
    </span><span class="nl">"startDateTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-09-23T00:00:00Z"</span><span class="p">,</span><span class="w">
@@ -1153,7 +1119,7 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
  </span><span class="nl">"@schemaLocation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://mycsp.com:8080/tmf-api/schemas/Product/Catalog.schema.json"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint retrieves a specific catalog.</p>
+<p>This endpoint updates a specific catalog.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET http://localhost:8080/catalog/&lt;ID&gt;</code></p>
 <h3 id='url-parameters-3'>URL Parameters</h3>
@@ -1168,36 +1134,94 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
 <td>The ID of the catalog to retrieve</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><div class="highlight"><pre class="highlight java tab-java"><code><span class="n">require</span> <span class="err">'</span><span class="n">kittn</span><span class="err">'</span>
+<h2 id='delete-a-specific-catalog'>Delete a Specific catalog</h2><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.net.URI</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.http.HttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.http.HttpRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.http.HttpResponse</span><span class="o">;</span>
 
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DeleteCatalogExample</span> <span class="o">{</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="nl">Kittn:</span><span class="o">:</span><span class="nc">APIClient</span><span class="o">.</span><span class="na">authorize</span><span class="o">!(</span><span class="err">'</span><span class="n">meowmeowmeow</span><span class="err">'</span><span class="o">)</span>
-<span class="n">api</span><span class="o">.</span><span class="na">kittens</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://localhost:8080/catalog/12345"</span><span class="o">;</span>
 
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">HttpClient</span> <span class="n">client</span> <span class="o">=</span> <span class="nc">HttpClient</span><span class="o">.</span><span class="na">newHttpClient</span><span class="o">();</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span> <span class="se">\</span>
- <span class="nt">-X</span> DELETE <span class="se">\</span>
- <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
+            <span class="nc">HttpRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="nc">HttpRequest</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">uri</span><span class="o">(</span><span class="no">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">url</span><span class="o">))</span>
+                    <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"Content-Type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">DELETE</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 
+            <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+            <span class="c1">// Handle the response</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response Code: "</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="na">statusCode</span><span class="o">());</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response Body: "</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="na">body</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://localhost:8080/catalog/12345'</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">})</span>
+
+    <span class="c1"># Check if the request was successful (status code 200)
+</span>    <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="c1"># Handle the response here
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"Response Code:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Response Body:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Error making DELETE request: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> DELETE <span class="s1">'http://localhost:8080/catalog/12345'</span> <span class="se">\</span>
+ <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">node-fetch</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">http://localhost:8080/catalog/12345</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">DELETE</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Check if the request was successful (status code 200)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">`HTTP error! Status: </span><span class="p">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// DELETE requests may not have a response body, so no need to parse JSON</span>
+    <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">();</span> <span class="c1">// or response.json() if you expect a JSON response</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Handle the response data here</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Response:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Error making DELETE request:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+
 </code></pre></div>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
- </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
- </span><span class="nl">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w"> 
+  </span><span class="nl">"204"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"deleted"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>This endpoint deletes a specific kitten.</p>
+<p>This endpoint deletes a specific catalog.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
+<p><code>DELETE http://localhost:8080/catalog/&lt;ID&gt;</code></p>
 <h3 id='url-parameters-4'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -1207,7 +1231,7 @@ curl <span class="nt">-X</span> GET <span class="s1">'http://localhost:8080/cata
 </thead><tbody>
 <tr>
 <td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>The ID of the catalog to delete</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
